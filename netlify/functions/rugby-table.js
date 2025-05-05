@@ -17,7 +17,6 @@ exports.handler = async () => {
   } catch (err) {
     return { statusCode: 502, body: `Upstream fetch error: ${err.message}` };
   }
-
   if (!res.ok) {
     return { statusCode: res.status, body: `Upstream error: ${res.statusText}` };
   }
@@ -26,8 +25,9 @@ exports.handler = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Content-Type': 'application/xml',
-      'Access-Control-Allow-Origin': '*',
+      'Content-Type':               'application/xml',
+      'Access-Control-Allow-Origin':'*',
+      'Cache-Control':              'public, max-age=86400'  // ← cache for 24 h
     },
     body: xml
   };

@@ -27,7 +27,7 @@ exports.handler = async () => {
     headers: {
       'Content-Type':               'application/xml',
       'Access-Control-Allow-Origin':'*',
-      'Cache-Control':              'public, max-age=86400'  // ← cache for 24 h
+      'Cache-Control':              'public, max-age=3600'  // ← cache for 1 h
     },
     body: xml
   };

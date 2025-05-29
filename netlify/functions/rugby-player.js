@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 exports.handler = async (event) => {
-  // 1) Handle CORS preflight requests
+  // CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 204,
@@ -15,16 +15,20 @@ exports.handler = async (event) => {
     };
   }
 
-  // 2) Read the player ID from ?id=
-  const id = event.queryStringParameters && event.queryStringParameters.id;
+  // required: player id
+  const params = event.queryStringParameters || {};
+  const id   = params.id;
+  const comp = params.comp || '241';      // ← comp=241 (TOP14) or comp=292 (EPCR)
+
   if (!id) {
-    return { statusCode: 400, body: "Missing ?id param" };
+    return { statusCode: 400, body: "Missing ?id parameter" };
   }
 
-  // 3) Fetch from StatsPerform
-  const API_URL = `http://rugbyunion-api.stats.com/api/RU/playerStats/241/2025/${id}`;
+  // build the API URL dynamically
+  const API_URL = `http://rugbyunion-api.stats.com/api/RU/playerStats/${comp}/2025/${id}`;
   const USER    = process.env.STATS_USER;
   const PASS    = process.env.STATS_PASS;
+
   let res;
   try {
     res = await fetch(API_URL, {
@@ -39,9 +43,8 @@ exports.handler = async (event) => {
   if (!res.ok) {
     return { statusCode: res.status, body: `Upstream error: ${res.statusText}` };
   }
-  const xml = await res.text();
 
-  // 4) Return with CORS on the GET response
+  const xml = await res.text();
   return {
     statusCode: 200,
     headers: {

@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 exports.handler = async () => {
-  const API_URL = 'http://rugbyunion-api.stats.com/api/RU/OptaFeeds/RU31/292/ru31_tables.243.2026.xml';
+  const API_URL = 'https://rugbyunion-api.stats.com/api/RU/OptaFeeds/RU31/291/ru31_tables.242.2026.xml';
   const USER    = process.env.STATS_USER;
   const PASS    = process.env.STATS_PASS;
 

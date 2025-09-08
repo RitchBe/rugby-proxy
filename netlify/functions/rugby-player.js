@@ -25,7 +25,7 @@ exports.handler = async (event) => {
   }
 
   // build the API URL dynamically
-  const API_URL = `http://rugbyunion-api.stats.com/api/RU/playerStats/${comp}/2025/${id}`;
+  const API_URL = `http://rugbyunion-api.stats.com/api/RU/playerStats/${comp}/2026/${id}`;
   const USER    = process.env.STATS_USER;
   const PASS    = process.env.STATS_PASS;
 
